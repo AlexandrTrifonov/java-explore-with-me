@@ -1,0 +1,21 @@
+package ru.practicum.mainservice.compilation.dto;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import ru.practicum.mainservice.constants.Constants;
+
+import javax.validation.constraints.Size;
+import java.util.List;
+
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UpdateCompilationRequest {
+    List<Long> events;
+    Boolean pinned;
+    @Size(min = Constants.MIN_SIZE_TITLE_OF_COMPILATION, max = Constants.MAX_SIZE_TITLE_OF_COMPILATION)
+    String title;
+}
