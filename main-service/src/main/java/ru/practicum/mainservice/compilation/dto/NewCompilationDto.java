@@ -7,7 +7,7 @@ import ru.practicum.mainservice.constants.Constants;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class NewCompilationDto {
-    List<Long> events;
+    Set<Long> events;
     @NotNull
     Boolean pinned = false;
     @NotBlank

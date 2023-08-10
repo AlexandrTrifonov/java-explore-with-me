@@ -15,7 +15,8 @@ import ru.practicum.mainservice.event.model.EventModel;
 import ru.practicum.mainservice.event.service.EventService;
 import ru.practicum.mainservice.exception.NotFoundException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class CompilationServiceImpl implements CompilationService {
     public CompilationDto createCompilation(NewCompilationDto newCompilationDto) {
         List<EventModel> events = new ArrayList<>();
         if (newCompilationDto.getEvents() != null) {
-            events = eventService.getEventsByIdsList(newCompilationDto.getEvents());
+            events = eventService.getEventsByIdsList(new ArrayList<>(newCompilationDto.getEvents()));
             if (newCompilationDto.getEvents().size() != events.size()) {
                 throw new NotFoundException("События не найдены");
             }
@@ -50,18 +51,14 @@ public class CompilationServiceImpl implements CompilationService {
         if (updateCompilationRequest.getTitle() != null && updateCompilationRequest.getTitle().isBlank()) {
             compilation.setTitle(updateCompilationRequest.getTitle());
         }
-
         if (updateCompilationRequest.getPinned() != null) {
             compilation.setPinned(updateCompilationRequest.getPinned());
         }
-
         if (updateCompilationRequest.getEvents() != null) {
-            List<EventModel> events = eventService.getEventsByIdsList(updateCompilationRequest.getEvents());
-
+            List<EventModel> events = eventService.getEventsByIdsList(new ArrayList<>(updateCompilationRequest.getEvents()));
             if (updateCompilationRequest.getEvents().size() != events.size()) {
                 throw new NotFoundException("События не найдены");
             }
-
             compilation.setEvents(events);
         }
         compilationRepository.save(compilation);

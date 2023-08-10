@@ -13,6 +13,7 @@ import java.util.List;
 public class CompilationMapper {
 
     public CompilationModel toCompilationModel(NewCompilationDto newCompilationDto, List<EventModel> events) {
+
         return CompilationModel.builder()
                 .id(null)
                 .events(events)
