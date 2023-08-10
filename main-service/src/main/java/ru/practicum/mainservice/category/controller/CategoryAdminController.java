@@ -20,7 +20,7 @@ public class CategoryAdminController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@Valid @RequestBody NewCategoryDto newCategoryDto) {
-        log.info("АДМИН - Запрос на создание новой категории {}", newCategoryDto.getName());
+        log.info("АДМИН -- Запрос на создание новой категории {}", newCategoryDto.getName());
         return categoryService.createCategory(newCategoryDto);
     }
 
