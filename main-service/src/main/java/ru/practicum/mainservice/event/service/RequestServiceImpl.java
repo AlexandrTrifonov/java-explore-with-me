@@ -12,9 +12,9 @@ import ru.practicum.mainservice.event.mapper.RequestMapper;
 import ru.practicum.mainservice.event.model.EventModel;
 import ru.practicum.mainservice.event.model.RequestModel;
 import ru.practicum.mainservice.event.repository.RequestRepository;
+import ru.practicum.mainservice.exception.LimitRequestException;
 import ru.practicum.mainservice.exception.NotFoundException;
 import ru.practicum.mainservice.exception.ValidationException;
-import ru.practicum.mainservice.exception.LimitRequestException;
 import ru.practicum.mainservice.user.model.UserModel;
 import ru.practicum.mainservice.user.service.UserService;
 

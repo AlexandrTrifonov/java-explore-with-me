@@ -1,9 +1,7 @@
 package ru.practicum.mainservice.user.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.constants.Constants;
 import ru.practicum.mainservice.user.dto.NewUserRequest;
@@ -17,18 +15,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/users")
-@Slf4j
 @RequiredArgsConstructor
-@Validated
 public class UserAdminController {
     private final UserService userService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(
             @RequestParam(required = false) List<Long> ids,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero int from,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive int size) {
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero int from,
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive int size) {
         return userService.getUsers(ids, from, size);
     }
 

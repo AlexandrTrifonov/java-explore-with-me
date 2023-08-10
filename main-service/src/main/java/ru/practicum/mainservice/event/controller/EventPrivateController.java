@@ -3,7 +3,6 @@ package ru.practicum.mainservice.event.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.constants.Constants;
 import ru.practicum.mainservice.event.dto.*;
@@ -19,17 +18,15 @@ import java.util.List;
 @RequestMapping("/users/{userId}/events")
 @Slf4j
 @RequiredArgsConstructor
-@Validated
 public class EventPrivateController {
     private final EventService eventService;
     private final RequestService requestService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getEvents(
             @PathVariable("userId") Long userId,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero int from,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive int size) {
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero int from,
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive int size) {
         return eventService.getEventsPrivate(userId, from, size);
     }
 
@@ -42,7 +39,6 @@ public class EventPrivateController {
     }
 
     @GetMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventByPrivate(
             @PathVariable Long userId,
             @PathVariable Long eventId) {
@@ -50,7 +46,6 @@ public class EventPrivateController {
     }
 
     @PatchMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByPrivate(
             @PathVariable Long userId,
             @PathVariable Long eventId,
@@ -59,7 +54,6 @@ public class EventPrivateController {
     }
 
     @GetMapping("/{eventId}/requests")
-    @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getEventRequestsByEventOwner(
             @PathVariable Long userId,
             @PathVariable Long eventId) {
@@ -67,7 +61,6 @@ public class EventPrivateController {
     }
 
     @PatchMapping("/{eventId}/requests")
-    @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult patchEventRequestsByEventOwner(
             @PathVariable Long userId,
             @PathVariable Long eventId,

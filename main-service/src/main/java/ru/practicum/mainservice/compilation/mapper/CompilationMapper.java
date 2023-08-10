@@ -1,5 +1,6 @@
 package ru.practicum.mainservice.compilation.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.mainservice.compilation.dto.CompilationDto;
 import ru.practicum.mainservice.compilation.dto.NewCompilationDto;
 import ru.practicum.mainservice.compilation.model.CompilationModel;
@@ -8,9 +9,10 @@ import ru.practicum.mainservice.event.model.EventModel;
 
 import java.util.List;
 
+@UtilityClass
 public class CompilationMapper {
 
-    public static CompilationModel toCompilationModel(NewCompilationDto newCompilationDto, List<EventModel> events) {
+    public CompilationModel toCompilationModel(NewCompilationDto newCompilationDto, List<EventModel> events) {
         return CompilationModel.builder()
                 .id(null)
                 .events(events)
@@ -19,7 +21,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static CompilationDto toCompilationDto(CompilationModel compilationModel, List<EventShortDto> events) {
+    public CompilationDto toCompilationDto(CompilationModel compilationModel, List<EventShortDto> events) {
         return CompilationDto.builder()
                 .id(compilationModel.getId())
                 .title(compilationModel.getTitle())

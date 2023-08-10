@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.practicum.client.StatsClient;
 import ru.practicum.dto.ViewStatsDto;
-import ru.practicum.mainservice.constants.Constants;
 import ru.practicum.mainservice.event.model.EventModel;
 import ru.practicum.mainservice.event.repository.RequestRepository;
 import ru.practicum.mainservice.exception.NotFoundException;
@@ -38,7 +37,8 @@ public class StatsServiceImpl implements StatsService {
         statsClient.saveHit(app,
                 request.getRequestURI(),
                 request.getRemoteAddr(),
-                LocalDateTime.parse(LocalDateTime.now().format(Constants.DATETIME_FORMATTER), Constants.DATETIME_FORMATTER));
+                LocalDateTime.now());
+//                LocalDateTime.parse(LocalDateTime.now().format(Constants.DATETIME_FORMATTER), Constants.DATETIME_FORMATTER));
     }
 
     @Override
@@ -46,7 +46,8 @@ public class StatsServiceImpl implements StatsService {
         ResponseEntity<Object> response = statsClient.getStats(start, end, uris, unique);
         try {
             List<ViewStatsDto> result = objectMapper.convertValue(
-                    response.getBody(), new TypeReference<List<ViewStatsDto>>() {});
+                    response.getBody(), new TypeReference<List<ViewStatsDto>>() {
+                    });
             return result;
         } catch (RuntimeException exception) {
             throw new NotFoundException(exception.getMessage());

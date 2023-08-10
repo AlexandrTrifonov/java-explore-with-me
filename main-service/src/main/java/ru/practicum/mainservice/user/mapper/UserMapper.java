@@ -9,7 +9,7 @@ import ru.practicum.mainservice.user.model.UserModel;
 @UtilityClass
 public class UserMapper {
 
-    public static UserDto toUserDto(UserModel userModel) {
+    public UserDto toUserDto(UserModel userModel) {
         return UserDto.builder()
                 .email(userModel.getEmail())
                 .id(userModel.getId())
@@ -17,14 +17,14 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserModel fromNewUserRequestToModel(NewUserRequest newUserRequest) {
+    public UserModel fromNewUserRequestToModel(NewUserRequest newUserRequest) {
         return UserModel.builder()
                 .email(newUserRequest.getEmail())
                 .name(newUserRequest.getName())
                 .build();
     }
 
-    public static UserShortDto toUserShortDto(UserModel userModel) {
+    public UserShortDto toUserShortDto(UserModel userModel) {
         return UserShortDto.builder()
                 .id(userModel.getId())
                 .name(userModel.getName())

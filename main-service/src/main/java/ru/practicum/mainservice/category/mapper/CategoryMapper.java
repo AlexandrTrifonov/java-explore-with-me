@@ -8,20 +8,20 @@ import ru.practicum.mainservice.category.model.CategoryModel;
 @UtilityClass
 public class CategoryMapper {
 
-    public static CategoryDto toCategoryDto(CategoryModel categoryModel) {
+    public CategoryDto toCategoryDto(CategoryModel categoryModel) {
         return CategoryDto.builder()
                 .id(categoryModel.getId())
                 .name(categoryModel.getName())
                 .build();
     }
 
-    public static CategoryModel fromNewCategoryDtotoModel(NewCategoryDto newCategoryDto) {
+    public CategoryModel fromNewCategoryDtotoModel(NewCategoryDto newCategoryDto) {
         return CategoryModel.builder()
                 .name(newCategoryDto.getName())
                 .build();
     }
 
-    public static CategoryModel fromCategoryDtotoModel(CategoryDto categoryDto) {
+    public CategoryModel fromCategoryDtotoModel(CategoryDto categoryDto) {
         return CategoryModel.builder()
                 .id(categoryDto.getId())
                 .name(categoryDto.getName())

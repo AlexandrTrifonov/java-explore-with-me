@@ -2,7 +2,6 @@ package ru.practicum.mainservice.category.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.category.dto.CategoryDto;
 import ru.practicum.mainservice.category.service.CategoryService;
@@ -19,16 +18,14 @@ public class CategoryPublicController {
     final CategoryService categoryService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<CategoryDto> getCategories(
-            @RequestParam(value = "from", defaultValue = "0", required = false) @PositiveOrZero int from,
-            @RequestParam(value = "size", defaultValue = "10", required = false) @Positive int size) {
+            @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(value = "size", defaultValue = "10") @Positive int size) {
         log.info("ПАБЛИК - Запрос на получение списка категорий");
         return categoryService.getCategories(from, size);
     }
 
     @GetMapping("/{catId}")
-    @ResponseStatus(HttpStatus.OK)
     public CategoryDto getCategoryById(@PathVariable Long catId) {
         log.info("ПАБЛИК - Запрос на получение категории по id {}", catId);
         return categoryService.getCategoryById(catId);

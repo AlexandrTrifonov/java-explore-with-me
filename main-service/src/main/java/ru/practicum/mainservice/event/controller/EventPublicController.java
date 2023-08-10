@@ -3,8 +3,6 @@ package ru.practicum.mainservice.event.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.constants.Constants;
 import ru.practicum.mainservice.event.dto.EventFullDto;
@@ -22,12 +20,10 @@ import java.util.List;
 @RequestMapping("/events")
 @Slf4j
 @RequiredArgsConstructor
-@Validated
 public class EventPublicController {
     private final EventService eventService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getEventsByPublic(
             @RequestParam(required = false) String text,
             @RequestParam(required = false) List<Long> categories,
@@ -36,8 +32,8 @@ public class EventPublicController {
             @RequestParam(required = false) @DateTimeFormat(pattern = Constants.DATETIME_FORMAT) LocalDateTime rangeEnd,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(required = false) EventSortType sort,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(required = false, defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive Integer size,
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive Integer size,
             HttpServletRequest request) {
         return eventService.getEventsByPublic(text, categories, paid, rangeStart, rangeEnd, onlyAvailable,
                 sort, from, size, request);

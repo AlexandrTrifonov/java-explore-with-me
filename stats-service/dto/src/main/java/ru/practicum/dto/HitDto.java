@@ -1,9 +1,11 @@
 package ru.practicum.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -18,6 +20,8 @@ public class HitDto {
     String uri;
     @NotBlank
     String ip;
-    @NotBlank
-    String timestamp;
+    //    @NotBlank
+    @JsonFormat(pattern = Constants.DATE_FORMAT, shape = JsonFormat.Shape.STRING)
+    LocalDateTime timestamp;
+//    String timestamp;
 }
