@@ -19,8 +19,8 @@ public class CompilationModel {
     private Long id;
     @Column(nullable = false, unique = true)
     private String title;
-    private @Column(nullable = false)
-    Boolean pinned;
+    @Column(nullable = false)
+    private Boolean pinned;
     @ManyToMany
     @JoinTable(name = "compilations_events",
             joinColumns = @JoinColumn(name = "compilation_id", referencedColumnName = "id"),

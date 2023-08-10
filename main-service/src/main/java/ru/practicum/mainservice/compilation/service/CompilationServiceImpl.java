@@ -47,7 +47,7 @@ public class CompilationServiceImpl implements CompilationService {
 
     public CompilationDto updateCompilation(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         CompilationModel compilation = getCompilationModelById(compId);
-        if (updateCompilationRequest.getTitle() != null) {
+        if (updateCompilationRequest.getTitle() != null && updateCompilationRequest.getTitle().isBlank()) {
             compilation.setTitle(updateCompilationRequest.getTitle());
         }
 

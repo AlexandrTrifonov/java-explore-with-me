@@ -87,13 +87,13 @@ public class EventServiceImpl implements EventService {
                 event.setState(State.PENDING);
             }
         }
-        if (updateEventUserRequest.getAnnotation() != null) {
+        if (updateEventUserRequest.getAnnotation() != null && !updateEventUserRequest.getAnnotation().isBlank()) {
             event.setAnnotation(updateEventUserRequest.getAnnotation());
         }
         if (updateEventUserRequest.getCategory() != null) {
             event.setCategoryModel(CategoryMapper.fromCategoryDtotoModel(categoryService.getCategoryById(updateEventUserRequest.getCategory())));
         }
-        if (updateEventUserRequest.getDescription() != null) {
+        if (updateEventUserRequest.getDescription() != null && !updateEventUserRequest.getDescription().isBlank()) {
             event.setDescription(updateEventUserRequest.getDescription());
         }
         if (updateEventUserRequest.getEventDate() != null) {
@@ -111,7 +111,7 @@ public class EventServiceImpl implements EventService {
         if (updateEventUserRequest.getRequestModeration() != null) {
             event.setRequestModeration(updateEventUserRequest.getRequestModeration());
         }
-        if (updateEventUserRequest.getTitle() != null) {
+        if (updateEventUserRequest.getTitle() != null && !updateEventUserRequest.getTitle().isBlank()) {
             event.setTitle(updateEventUserRequest.getTitle());
         }
         eventRepository.save(event);
@@ -136,10 +136,10 @@ public class EventServiceImpl implements EventService {
         validateUpdateEventDate(updateEventAdminRequest.getEventDate());
         EventModel event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("События не существует."));
-        if (updateEventAdminRequest.getAnnotation() != null) {
+        if (updateEventAdminRequest.getAnnotation() != null && !updateEventAdminRequest.getAnnotation().isBlank()) {
             event.setAnnotation(updateEventAdminRequest.getAnnotation());
         }
-        if (updateEventAdminRequest.getDescription() != null) {
+        if (updateEventAdminRequest.getDescription() != null && !updateEventAdminRequest.getDescription().isBlank()) {
             event.setDescription(updateEventAdminRequest.getDescription());
         }
         if (updateEventAdminRequest.getCategory() != null) {
@@ -179,7 +179,7 @@ public class EventServiceImpl implements EventService {
                 }
             }
         }
-        if (updateEventAdminRequest.getTitle() != null) {
+        if (updateEventAdminRequest.getTitle() != null && !updateEventAdminRequest.getTitle().isBlank()) {
             event.setTitle(updateEventAdminRequest.getTitle());
         }
         log.info("ADMIN - Обновление события");
