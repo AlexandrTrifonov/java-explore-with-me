@@ -6,10 +6,7 @@ import lombok.experimental.FieldDefaults;
 import ru.practicum.mainservice.constants.Constants;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -28,16 +25,29 @@ public class NewEventDto {
     @Size(min = Constants.MIN_LENGTH_DESCRIPTION, max = Constants.MAX_LENGTH_DESCRIPTION)
     String description;
     @NotNull
+    @Future
     @JsonFormat(pattern = Constants.DATETIME_FORMAT, shape = JsonFormat.Shape.STRING)
     LocalDateTime eventDate;
     @NotNull
     @Valid
     LocationDto location;
-    Boolean paid = false;
+    boolean paid = false;
     @PositiveOrZero
-    Long participantLimit = 0L;
-    Boolean requestModeration = true;
+    long participantLimit = 0L;
+    boolean requestModeration = true;
     @NotBlank
     @Size(min = Constants.MIN_LENGTH_TITLE, max = Constants.MAX_LENGTH_TITLE)
     String title;
+
+    public Boolean getPaid() {
+        return Boolean.parseBoolean(String.valueOf(paid));
+    }
+
+    public Long getParticipantLimit() {
+        return Long.parseLong(String.valueOf(participantLimit));
+    }
+
+    public Boolean getRequestModeration() {
+        return Boolean.parseBoolean(String.valueOf(requestModeration));
+    }
 }

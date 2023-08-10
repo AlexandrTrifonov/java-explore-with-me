@@ -2,6 +2,7 @@ package ru.practicum.mainservice.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.mainservice.exception.InvalidUniqueKeyException;
@@ -41,8 +42,8 @@ public class UserServiceImpl implements UserService {
         try {
             log.info("АДМИН - Пользователь {} создан", newUserRequest);
             return UserMapper.toUserDto(userRepository.save(UserMapper.fromNewUserRequestToModel(newUserRequest)));
-        } catch (RuntimeException exception) {
-            throw new InvalidUniqueKeyException("Пользователь с именем " + newUserRequest.getName() + "уже существует");
+        } catch (DataIntegrityViolationException exception) {
+            throw new InvalidUniqueKeyException("Пользователь с именем " + newUserRequest.getName() + " уже существует");
         }
     }
 

@@ -2,6 +2,7 @@ package ru.practicum.mainservice.category.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.mainservice.category.dto.CategoryDto;
@@ -31,8 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             log.info("АДМИН - Создание новой категории {}", newCategoryDto.getName());
             return CategoryMapper.toCategoryDto(categoryRepository.save(CategoryMapper.fromNewCategoryDtotoModel(newCategoryDto)));
-        } catch (RuntimeException exception) {
-            throw new InvalidUniqueKeyException(exception.getMessage());
+        } catch (DataIntegrityViolationException exception) {
+            throw new InvalidUniqueKeyException("Категория с названием " + newCategoryDto.getName() + " уже существует");
         }
     }
 
@@ -42,8 +43,8 @@ public class CategoryServiceImpl implements CategoryService {
         updateCategory.setName(categoryDto.getName());
         try {
             return CategoryMapper.toCategoryDto(categoryRepository.save(updateCategory));
-        } catch (RuntimeException exception) {
-            throw new InvalidUniqueKeyException(exception.getMessage());
+        } catch (DataIntegrityViolationException exception) {
+            throw new InvalidUniqueKeyException("Категория с названием " + categoryDto.getName() + " уже существует");
         }
     }
 
