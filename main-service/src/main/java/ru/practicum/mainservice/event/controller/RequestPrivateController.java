@@ -1,7 +1,6 @@
 package ru.practicum.mainservice.event.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.event.dto.ParticipationRequestDto;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users/{userId}/requests")
-@Slf4j
 @RequiredArgsConstructor
 public class RequestPrivateController {
     private final RequestService requestService;

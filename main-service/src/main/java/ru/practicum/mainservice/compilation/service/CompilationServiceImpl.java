@@ -11,12 +11,14 @@ import ru.practicum.mainservice.compilation.mapper.CompilationMapper;
 import ru.practicum.mainservice.compilation.model.CompilationModel;
 import ru.practicum.mainservice.compilation.repository.CompilationRepository;
 import ru.practicum.mainservice.event.dto.EventShortDto;
+import ru.practicum.mainservice.event.mapper.EventMapper;
 import ru.practicum.mainservice.event.model.EventModel;
 import ru.practicum.mainservice.event.service.EventService;
 import ru.practicum.mainservice.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +78,10 @@ public class CompilationServiceImpl implements CompilationService {
         }
         List<CompilationDto> listCompilations = new ArrayList<>();
         compilations.forEach(compilation -> {
-            List<EventShortDto> eventsShortDto = eventService.getListEventsShortDto(compilation.getEvents());
+            List<EventModel> eventsModel = compilation.getEvents();
+            List<EventShortDto> eventsShortDto = eventsModel.stream()
+                    .map((event) -> EventMapper.toEventShortDto(event, 0L, 0L))
+                    .collect(Collectors.toList());
             listCompilations.add(CompilationMapper.toCompilationDto(compilation, eventsShortDto));
         });
         return listCompilations;
