@@ -20,8 +20,6 @@ public class HitDto {
     String uri;
     @NotBlank
     String ip;
-    //    @NotBlank
     @JsonFormat(pattern = Constants.DATE_FORMAT, shape = JsonFormat.Shape.STRING)
     LocalDateTime timestamp;
-//    String timestamp;
 }

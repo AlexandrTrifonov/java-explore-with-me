@@ -38,7 +38,6 @@ public class StatsServiceImpl implements StatsService {
                 request.getRequestURI(),
                 request.getRemoteAddr(),
                 LocalDateTime.now());
-//                LocalDateTime.parse(LocalDateTime.now().format(Constants.DATETIME_FORMATTER), Constants.DATETIME_FORMATTER));
     }
 
     @Override

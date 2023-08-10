@@ -12,7 +12,6 @@ public class StatsMapper {
         statsModel.setUri(hitDto.getUri());
         statsModel.setIp(hitDto.getIp());
         statsModel.setTimestamp(hitDto.getTimestamp());
-//        statsModel.setTimestamp(LocalDateTime.parse(hitDto.getTimestamp(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT)));
         return statsModel;
     }
 }

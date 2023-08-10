@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
             log.info("АДМИН - Пользователь {} создан", newUserRequest);
             return UserMapper.toUserDto(userRepository.save(UserMapper.fromNewUserRequestToModel(newUserRequest)));
         } catch (RuntimeException exception) {
-            throw new InvalidUniqueKeyException(exception.getMessage());
+            throw new InvalidUniqueKeyException("Пользователь с именем " + newUserRequest.getName() + "уже существует");
         }
     }
 
@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден."));
-
         log.info("АДМИН - Пользователь с id {} удален", userId);
         userRepository.deleteById(userId);
     }
