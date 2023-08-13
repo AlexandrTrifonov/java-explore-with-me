@@ -57,7 +57,7 @@ public class EventMapper {
                 .build();
     }
 
-    public EventShortDto toEventShortDto(EventModel eventModel, Long confirmedRequests, Long view) {
+    public EventShortDto toEventShortDto(EventModel eventModel, Long confirmedRequests, Long view, Long count) {
         return EventShortDto.builder()
                 .annotation(eventModel.getAnnotation())
                 .category(CategoryMapper.toCategoryDto(eventModel.getCategoryModel()))
@@ -68,6 +68,7 @@ public class EventMapper {
                 .paid(eventModel.getPaid())
                 .title(eventModel.getTitle())
                 .views(view)
+                .count(count)
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import ru.practicum.mainservice.comment.dto.CommentShortDto;
 import ru.practicum.mainservice.comment.dto.NewCommentDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
 
@@ -16,9 +17,11 @@ public interface CommentService {
 
     List<CommentDto> getCommentsByPrivate(Long userId, int from, int size);
 
-    List<CommentShortDto> getCommentsByPublic(int from, int size);
+    List<CommentShortDto> getCommentsByEventIdByPublic(Long eventId, int from, int size);
 
     List<CommentDto> getCommentsByAdmin(int from, int size);
 
     void deleteCommentByAdmin(Long commentId);
+
+    Map<Long, Long> getCommentsCountByEvents();
 }

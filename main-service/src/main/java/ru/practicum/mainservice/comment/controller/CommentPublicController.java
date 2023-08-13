@@ -2,10 +2,7 @@ package ru.practicum.mainservice.comment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.practicum.mainservice.comment.dto.CommentShortDto;
 import ru.practicum.mainservice.comment.service.CommentService;
 import ru.practicum.mainservice.constants.Constants;
@@ -21,10 +18,11 @@ import java.util.List;
 public class CommentPublicController {
     private final CommentService commentService;
 
-    @GetMapping
-    public List<CommentShortDto> getCommentsByPublic(
+    @GetMapping("/{eventId}")
+    public List<CommentShortDto> getCommentsByEventIdByPublic(
+            @PathVariable Long eventId,
             @RequestParam(defaultValue = Constants.PAGE_DEFAULT_FROM) @PositiveOrZero int from,
             @RequestParam(defaultValue = Constants.PAGE_DEFAULT_SIZE) @Positive int size) {
-        return commentService.getCommentsByPublic(from, size);
+        return commentService.getCommentsByEventIdByPublic(eventId, from, size);
     }
 }

@@ -10,15 +10,21 @@ import ru.practicum.mainservice.comment.dto.CommentShortDto;
 import ru.practicum.mainservice.comment.dto.NewCommentDto;
 import ru.practicum.mainservice.comment.mapper.CommentMapper;
 import ru.practicum.mainservice.comment.model.CommentModel;
+import ru.practicum.mainservice.comment.model.Count;
 import ru.practicum.mainservice.comment.repository.CommentRepository;
+import ru.practicum.mainservice.event.enums.State;
 import ru.practicum.mainservice.event.model.EventModel;
 import ru.practicum.mainservice.event.service.EventService;
 import ru.practicum.mainservice.exception.InvalidEventDateException;
+import ru.practicum.mainservice.exception.InvalidStateEventException;
 import ru.practicum.mainservice.exception.NotFoundException;
+import ru.practicum.mainservice.exception.ValidationException;
 import ru.practicum.mainservice.user.model.UserModel;
 import ru.practicum.mainservice.user.service.UserService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +39,9 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto createCommentPrivate(Long userId, Long eventId, NewCommentDto newCommentDto) {
         UserModel user = userService.getUserById(userId);
         EventModel event = eventService.getEventById(eventId);
+        if (!event.getState().equals(State.PUBLISHED)) {
+            throw new InvalidStateEventException("Оставить комментарий можно к опубликованному событию");
+        }
         CommentModel newCommentModel = CommentMapper.toCommentModel(newCommentDto);
         newCommentModel.setAuthor(user);
         newCommentModel.setEvent(event);
@@ -46,10 +55,9 @@ public class CommentServiceImpl implements CommentService {
         log.info("Запуск метода updateCommentByPrivate");
         UserModel user = userService.getUserById(userId);
         CommentModel comment = getCommentById(commentId);
+        validateDateToUpdate(comment);
         validateCommentAuthor(user, comment);
-        if (newCommentDto.getCommentText() != null && !newCommentDto.getCommentText().isBlank()) {
-            comment.setCommentText(newCommentDto.getCommentText());
-        }
+        comment.setCommentText(newCommentDto.getCommentText());
         log.info("PRIVATE - Обновление комментария {}", commentId);
         commentRepository.save(comment);
         return CommentMapper.toCommentDto(comment);
@@ -74,11 +82,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentShortDto> getCommentsByPublic(int from, int size) {
+    public List<CommentShortDto> getCommentsByEventIdByPublic(Long eventId, int from, int size) {
         PageRequest pageable = PageRequest.of(from / size, size);
-        Page<CommentModel> commentsPage = commentRepository.findAll(pageable);
-        List<CommentModel> comments = commentsPage.getContent();
-        log.info("PUBLIC - Список всех комментариев");
+        List<CommentModel> comments = commentRepository.findAllByEventId(eventId, pageable);
+        log.info("PUBLIC - Список всех комментариев события {}", eventId);
         return getListCommentsShortDto(comments);
     }
 
@@ -98,9 +105,17 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(commentId);
     }
 
+    @Override
+    public Map<Long, Long> getCommentsCountByEvents() {
+        Map<Long, Long> countComments;
+        countComments = commentRepository.getCommentsCountByEvent().stream()
+                .collect(Collectors.toMap(Count::getEventId, Count::getCount));
+        log.info("Получение мапы количества комментариев");
+        return countComments;
+    }
+
     private CommentModel getCommentById(Long commentId) {
-        return commentRepository.findById(commentId)
-                .orElseThrow(() -> new NotFoundException("Комментарий не существует."));
+        return commentRepository.findById(commentId).orElseThrow(() -> new NotFoundException("Комментарий не существует."));
     }
 
     private void validateCommentAuthor(UserModel user, CommentModel comment) {
@@ -110,14 +125,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private List<CommentDto> getListCommentsDto(List<CommentModel> comments) {
-        return comments.stream()
-                .map(CommentMapper::toCommentDto)
-                .collect(Collectors.toList());
+        return comments.stream().map(CommentMapper::toCommentDto).collect(Collectors.toList());
     }
 
     private List<CommentShortDto> getListCommentsShortDto(List<CommentModel> comments) {
-        return comments.stream()
-                .map(CommentMapper::toCommentShortDto)
-                .collect(Collectors.toList());
+        return comments.stream().map(CommentMapper::toCommentShortDto).collect(Collectors.toList());
+    }
+
+    private void validateDateToUpdate(CommentModel comment) {
+        if (comment.getCreatedOn().plusHours(1).isBefore(LocalDateTime.now())) {
+            throw new ValidationException("Редактирование комментария возможно в течение часа после его создания");
+        }
     }
 }

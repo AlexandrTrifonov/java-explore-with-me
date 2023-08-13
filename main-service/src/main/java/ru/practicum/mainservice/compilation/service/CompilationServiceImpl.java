@@ -80,7 +80,7 @@ public class CompilationServiceImpl implements CompilationService {
         compilations.forEach(compilation -> {
             List<EventModel> eventsModel = compilation.getEvents();
             List<EventShortDto> eventsShortDto = eventsModel.stream()
-                    .map((event) -> EventMapper.toEventShortDto(event, 0L, 0L))
+                    .map((event) -> EventMapper.toEventShortDto(event, 0L, 0L, 0L))
                     .collect(Collectors.toList());
             listCompilations.add(CompilationMapper.toCompilationDto(compilation, eventsShortDto));
         });

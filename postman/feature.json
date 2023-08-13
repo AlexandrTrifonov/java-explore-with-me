@@ -106,14 +106,126 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/users/1/events",
+          "raw": "{{baseUrl}}/users/:users/events",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "users",
-            "1",
+            ":users",
             "events"
+          ],
+          "variable": [
+            {
+              "key": "users",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"annotation\": \"Сап прогулки по рекам и каналам – это возможность увидеть Практикбург с другого ракурса\",\r\n  \"category\": 1,\r\n  \"description\": \"От английского SUP - Stand Up Paddle — \\\"стоя на доске с веслом\\\", гавайская разновидность сёрфинга, в котором серфер, стоя на доске, катается на волнах и при этом гребет веслом, а не руками, как в классическом серфинге.\",\r\n  \"eventDate\": \"2023-10-11 23:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 7,\r\n  \"requestModeration\": false,\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"title\": \"Сап прогулки по рекам и каналам\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/admin/events/:events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "admin",
+            "events",
+            ":events"
+          ],
+          "variable": [
+            {
+              "key": "events",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Создание события 2",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет1.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/:users/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            ":users",
+            "events"
+          ],
+          "variable": [
+            {
+              "key": "users",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request Copy",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"annotation\": \"Сап прогулки по рекам и каналам – это возможность увидеть Практикбург с другого ракурса\",\r\n  \"category\": 1,\r\n  \"description\": \"От английского SUP - Stand Up Paddle — \\\"стоя на доске с веслом\\\", гавайская разновидность сёрфинга, в котором серфер, стоя на доске, катается на волнах и при этом гребет веслом, а не руками, как в классическом серфинге.\",\r\n  \"eventDate\": \"2023-10-11 23:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 7,\r\n  \"requestModeration\": false,\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"title\": \"Сап прогулки по рекам и каналам\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/admin/events/:events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "admin",
+            "events",
+            ":events"
+          ],
+          "variable": [
+            {
+              "key": "events",
+              "value": "2"
+            }
           ]
         }
       },
@@ -171,6 +283,70 @@
             {
               "key": "eventId",
               "value": "1"
+            }
+          ],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Создание комментария автора на событие 2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "const source = JSON.parse(pm.request.body.raw);\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Комментарий должен содержать поля: id, commentText, createdOn, author, event\", function () {\r",
+              "    pm.expect(target).to.have.property('id');\r",
+              "    pm.expect(target).to.have.property('commentText');\r",
+              "    pm.expect(target).to.have.property('createdOn');\r",
+              "    pm.expect(target).to.have.property('author');\r",
+              "    pm.expect(target).to.have.property('event');\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"commentText\" : \"Комментарий к событию 2\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/:userId/comments?eventId=2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            ":userId",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "eventId",
+              "value": "2"
             }
           ],
           "variable": [
@@ -621,6 +797,102 @@
       "response": []
     },
     {
+      "name": "Список всех комментариев события 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Ответ должен быть массивом с размером больше 0\", function () {\r",
+              "    pm.expect(target).is.an('array');\r",
+              "    pm.expect(target.length).to.be.gte(0);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/comments/:eventId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "comments",
+            ":eventId"
+          ],
+          "variable": [
+            {
+              "key": "eventId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Удаление комментария автором Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            ":userId",
+            "comments",
+            ":commentId"
+          ],
+          "variable": [
+            {
+              "key": "userId",
+              "value": "1"
+            },
+            {
+              "key": "commentId",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Пустой список комментариев автора",
       "event": [
         {
@@ -660,43 +932,6 @@
               "key": "users",
               "value": "1"
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Список всех комментариев пользователя",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "const target = pm.response.json();\r",
-              "\r",
-              "pm.test(\"Ответ должен быть массивом с размером больше 0\", function () {\r",
-              "    pm.expect(target).is.an('array');\r",
-              "    pm.expect(target.length).to.be.gte(0);\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/comments",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "comments"
           ]
         }
       },

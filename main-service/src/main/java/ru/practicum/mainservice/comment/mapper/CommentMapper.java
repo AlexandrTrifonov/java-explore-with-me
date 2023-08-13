@@ -1,5 +1,6 @@
 package ru.practicum.mainservice.comment.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.mainservice.comment.dto.CommentDto;
 import ru.practicum.mainservice.comment.dto.CommentShortDto;
 import ru.practicum.mainservice.comment.dto.NewCommentDto;
@@ -9,31 +10,32 @@ import ru.practicum.mainservice.user.mapper.UserMapper;
 
 import java.time.LocalDateTime;
 
+@UtilityClass
 public class CommentMapper {
 
-    public static CommentDto toCommentDto(CommentModel comment) {
+    public CommentDto toCommentDto(CommentModel comment) {
         return CommentDto.builder()
                 .id(comment.getId())
                 .commentText(comment.getCommentText())
                 .createdOn(comment.getCreatedOn())
                 .author(UserMapper.toUserShortDto(comment.getAuthor()))
-                .event(EventMapper.toEventShortDto(comment.getEvent(), 0L, 0L))
+                .event(EventMapper.toEventShortDto(comment.getEvent(), 0L, 0L, 0L))
                 .build();
     }
 
-    public static CommentModel toCommentModel(NewCommentDto newCommentDto) {
+    public CommentModel toCommentModel(NewCommentDto newCommentDto) {
         return CommentModel.builder()
                 .commentText(newCommentDto.getCommentText())
                 .createdOn(LocalDateTime.now())
                 .build();
     }
 
-    public static CommentShortDto toCommentShortDto(CommentModel comment) {
+    public CommentShortDto toCommentShortDto(CommentModel comment) {
         return CommentShortDto.builder()
                 .id(comment.getId())
                 .commentText(comment.getCommentText())
                 .createdOn(comment.getCreatedOn())
-                .event(EventMapper.toEventShortDto(comment.getEvent(), 0L, 0L))
+                .event(EventMapper.toEventShortDto(comment.getEvent(), 0L, 0L, 0L))
                 .build();
     }
 }
