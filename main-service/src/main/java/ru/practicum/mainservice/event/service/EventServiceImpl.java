@@ -2,6 +2,8 @@ package ru.practicum.mainservice.event.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,7 @@ import ru.practicum.dto.ViewStatsDto;
 import ru.practicum.mainservice.category.mapper.CategoryMapper;
 import ru.practicum.mainservice.category.model.CategoryModel;
 import ru.practicum.mainservice.category.service.CategoryService;
+import ru.practicum.mainservice.comment.service.CommentService;
 import ru.practicum.mainservice.event.dto.*;
 import ru.practicum.mainservice.event.enums.EventSortType;
 import ru.practicum.mainservice.event.enums.EventStateAction;
@@ -40,6 +43,12 @@ public class EventServiceImpl implements EventService {
     private final UserService userService;
     private final CategoryService categoryService;
     private final StatsService statsService;
+    private CommentService commentService;
+
+    @Autowired
+    public void setCommentService(@Lazy CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @Override
     public List<EventShortDto> getEventsPrivate(Long userId, int from, int size) {
@@ -198,12 +207,14 @@ public class EventServiceImpl implements EventService {
     public List<EventShortDto> getListEventsShortDto(List<EventModel> events) {
         Map<Long, Long> views = statsService.getViews(events);
         Map<Long, Long> confirmedRequests = statsService.getConfirmedRequests(events);
+        Map<Long, Long> counts = commentService.getCommentsCountByEvents(events);
 
         return events.stream()
                 .map((event) -> EventMapper.toEventShortDto(
                         event,
                         confirmedRequests.getOrDefault(event.getId(), 0L),
-                        views.getOrDefault(event.getId(), 0L)))
+                        views.getOrDefault(event.getId(), 0L),
+                        counts.getOrDefault(event.getId(), 0L)))
                 .collect(Collectors.toList());
     }
 

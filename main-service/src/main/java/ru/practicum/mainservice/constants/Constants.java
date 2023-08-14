@@ -23,5 +23,7 @@ public class Constants {
     public static final int MAX_LENGTH_TITLE = 120;
     public static final int MIN_SIZE_TITLE_OF_COMPILATION = 1;
     public static final int MAX_SIZE_TITLE_OF_COMPILATION = 50;
+    public static final int MIN_LENGTH_COMMENT_TEXT = 10;
+    public static final int MAX_LENGTH_COMMENT_TEXT = 512;
 
 }
