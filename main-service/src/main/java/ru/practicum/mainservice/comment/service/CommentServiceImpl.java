@@ -106,9 +106,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Map<Long, Long> getCommentsCountByEvents() {
+    public Map<Long, Long> getCommentsCountByEvents(List<EventModel> events) {
         Map<Long, Long> countComments;
-        countComments = commentRepository.getCommentsCountByEvent().stream()
+        List<Long> eventsId;
+        eventsId = events.stream()
+                .map(EventModel::getId)
+                .collect(Collectors.toList());
+        countComments = commentRepository.getCommentsCountByEvent(eventsId).stream()
                 .collect(Collectors.toMap(Count::getEventId, Count::getCount));
         log.info("Получение мапы количества комментариев");
         return countComments;

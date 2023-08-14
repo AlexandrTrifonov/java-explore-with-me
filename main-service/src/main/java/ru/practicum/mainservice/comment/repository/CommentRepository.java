@@ -3,6 +3,7 @@ package ru.practicum.mainservice.comment.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ru.practicum.mainservice.comment.model.CommentModel;
 import ru.practicum.mainservice.comment.model.Count;
 
@@ -16,7 +17,9 @@ public interface CommentRepository extends JpaRepository<CommentModel, Long> {
 
     Long countByEventId(Long eventId);
 
-    @Query("select new ru.practicum.mainservice.comment.model.Count(" +
-            "event.id, count(c)) from CommentModel c group by c.event.id")
-    List<Count> getCommentsCountByEvent();
+    @Query("SELECT new ru.practicum.mainservice.comment.model.Count(event.id, count(c)) " +
+            "from CommentModel c " +
+            "WHERE (c.event.id IN (:eventsId) OR :eventsId IS NULL) " +
+            "group by c.event.id")
+    List<Count> getCommentsCountByEvent(@Param("eventsId") List<Long> eventsId);
 }

@@ -3,6 +3,7 @@ package ru.practicum.mainservice.comment.service;
 import ru.practicum.mainservice.comment.dto.CommentDto;
 import ru.practicum.mainservice.comment.dto.CommentShortDto;
 import ru.practicum.mainservice.comment.dto.NewCommentDto;
+import ru.practicum.mainservice.event.model.EventModel;
 
 import java.util.List;
 import java.util.Map;
@@ -23,5 +24,5 @@ public interface CommentService {
 
     void deleteCommentByAdmin(Long commentId);
 
-    Map<Long, Long> getCommentsCountByEvents();
+    Map<Long, Long> getCommentsCountByEvents(List<EventModel> events);
 }

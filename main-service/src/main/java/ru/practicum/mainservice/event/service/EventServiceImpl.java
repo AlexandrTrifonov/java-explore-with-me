@@ -207,7 +207,7 @@ public class EventServiceImpl implements EventService {
     public List<EventShortDto> getListEventsShortDto(List<EventModel> events) {
         Map<Long, Long> views = statsService.getViews(events);
         Map<Long, Long> confirmedRequests = statsService.getConfirmedRequests(events);
-        Map<Long, Long> counts = commentService.getCommentsCountByEvents();
+        Map<Long, Long> counts = commentService.getCommentsCountByEvents(events);
 
         return events.stream()
                 .map((event) -> EventMapper.toEventShortDto(
