@@ -1,5 +1,21 @@
 # java-explore-with-me
-Template repository for ExploreWithMe project.
+Репозиторий проекта -https://github.com/AlexandrTrifonov/java-explore-with-me/tree/main
 
-## feature_comment_link
-[feature_comment_link](https://github.com/AlexandrTrifonov/java-explore-with-me/pull/5)
+__Дипломный проект для курса Java-разработчик на Yandex Практикум.__
+
+__Идея проекта:__ Свободное время — ценный ресурс. Ежедневно каждый планирует как его потратить — куда и с кем сходить.
+Сложнее всего в таком планировании поиск информации и переговоры. Нужно учесть много деталей: какие намечаются
+мероприятия,
+свободны ли в этот момент друзья, как всех пригласить и где собраться.
+Написанное приложение — афиша, в которой можно предложить какое-либо событие от выставки до похода в кино и собрать
+компанию для участия в нём.
+
+## Технологии
+
+- Java 11
+- Spring Boot
+- JPA
+- Hibernate
+- Lombok
+- PostgreSQL
+- Maven
